@@ -88,6 +88,16 @@ class ConvaiService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::service::FeedbackResponse>> PrepareAsyncSubmitFeedback(::grpc::ClientContext* context, const ::service::FeedbackRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::service::FeedbackResponse>>(PrepareAsyncSubmitFeedbackRaw(context, request, cq));
     }
+    // added for image stremming 
+    std::unique_ptr< ::grpc::ClientWriterInterface< ::service::PngSequence>> SendPngSequence(::grpc::ClientContext* context, ::service::PngSequenceResponse* response) {
+      return std::unique_ptr< ::grpc::ClientWriterInterface< ::service::PngSequence>>(SendPngSequenceRaw(context, response));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncWriterInterface< ::service::PngSequence>> AsyncSendPngSequence(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncWriterInterface< ::service::PngSequence>>(AsyncSendPngSequenceRaw(context, response, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncWriterInterface< ::service::PngSequence>> PrepareAsyncSendPngSequence(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncWriterInterface< ::service::PngSequence>>(PrepareAsyncSendPngSequenceRaw(context, response, cq));
+    }
     class experimental_async_interface {
      public:
       virtual ~experimental_async_interface() {}
@@ -123,6 +133,12 @@ class ConvaiService final {
       #else
       virtual void SubmitFeedback(::grpc::ClientContext* context, const ::service::FeedbackRequest* request, ::service::FeedbackResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
       #endif
+      // added for image stremming 
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void SendPngSequence(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::ClientWriteReactor< ::service::PngSequence>* reactor) = 0;
+      #else
+      virtual void SendPngSequence(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::experimental::ClientWriteReactor< ::service::PngSequence>* reactor) = 0;
+      #endif
     };
     #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
     typedef class experimental_async_interface async_interface;
@@ -148,6 +164,9 @@ class ConvaiService final {
     virtual ::grpc::ClientAsyncReaderInterface< ::service::GetResponseResponse>* PrepareAsyncGetResponseSingleRaw(::grpc::ClientContext* context, const ::service::GetResponseRequestSingle& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::service::FeedbackResponse>* AsyncSubmitFeedbackRaw(::grpc::ClientContext* context, const ::service::FeedbackRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::service::FeedbackResponse>* PrepareAsyncSubmitFeedbackRaw(::grpc::ClientContext* context, const ::service::FeedbackRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientWriterInterface< ::service::PngSequence>* SendPngSequenceRaw(::grpc::ClientContext* context, ::service::PngSequenceResponse* response) = 0;
+    virtual ::grpc::ClientAsyncWriterInterface< ::service::PngSequence>* AsyncSendPngSequenceRaw(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncWriterInterface< ::service::PngSequence>* PrepareAsyncSendPngSequenceRaw(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -202,6 +221,15 @@ class ConvaiService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::service::FeedbackResponse>> PrepareAsyncSubmitFeedback(::grpc::ClientContext* context, const ::service::FeedbackRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::service::FeedbackResponse>>(PrepareAsyncSubmitFeedbackRaw(context, request, cq));
     }
+    std::unique_ptr< ::grpc::ClientWriter< ::service::PngSequence>> SendPngSequence(::grpc::ClientContext* context, ::service::PngSequenceResponse* response) {
+      return std::unique_ptr< ::grpc::ClientWriter< ::service::PngSequence>>(SendPngSequenceRaw(context, response));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncWriter< ::service::PngSequence>> AsyncSendPngSequence(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncWriter< ::service::PngSequence>>(AsyncSendPngSequenceRaw(context, response, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncWriter< ::service::PngSequence>> PrepareAsyncSendPngSequence(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncWriter< ::service::PngSequence>>(PrepareAsyncSendPngSequenceRaw(context, response, cq));
+    }
     class experimental_async final :
       public StubInterface::experimental_async_interface {
      public:
@@ -237,6 +265,11 @@ class ConvaiService final {
       #else
       void SubmitFeedback(::grpc::ClientContext* context, const ::service::FeedbackRequest* request, ::service::FeedbackResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
       #endif
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void SendPngSequence(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::ClientWriteReactor< ::service::PngSequence>* reactor) override;
+      #else
+      void SendPngSequence(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::experimental::ClientWriteReactor< ::service::PngSequence>* reactor) override;
+      #endif
      private:
       friend class Stub;
       explicit experimental_async(Stub* stub): stub_(stub) { }
@@ -264,12 +297,16 @@ class ConvaiService final {
     ::grpc::ClientAsyncReader< ::service::GetResponseResponse>* PrepareAsyncGetResponseSingleRaw(::grpc::ClientContext* context, const ::service::GetResponseRequestSingle& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::service::FeedbackResponse>* AsyncSubmitFeedbackRaw(::grpc::ClientContext* context, const ::service::FeedbackRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::service::FeedbackResponse>* PrepareAsyncSubmitFeedbackRaw(::grpc::ClientContext* context, const ::service::FeedbackRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientWriter< ::service::PngSequence>* SendPngSequenceRaw(::grpc::ClientContext* context, ::service::PngSequenceResponse* response) override;
+    ::grpc::ClientAsyncWriter< ::service::PngSequence>* AsyncSendPngSequenceRaw(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncWriter< ::service::PngSequence>* PrepareAsyncSendPngSequenceRaw(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_Hello_;
     const ::grpc::internal::RpcMethod rpcmethod_HelloStream_;
     const ::grpc::internal::RpcMethod rpcmethod_SpeechToText_;
     const ::grpc::internal::RpcMethod rpcmethod_GetResponse_;
     const ::grpc::internal::RpcMethod rpcmethod_GetResponseSingle_;
     const ::grpc::internal::RpcMethod rpcmethod_SubmitFeedback_;
+    const ::grpc::internal::RpcMethod rpcmethod_SendPngSequence_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -283,6 +320,8 @@ class ConvaiService final {
     virtual ::grpc::Status GetResponse(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::service::GetResponseResponse, ::service::GetResponseRequest>* stream);
     virtual ::grpc::Status GetResponseSingle(::grpc::ServerContext* context, const ::service::GetResponseRequestSingle* request, ::grpc::ServerWriter< ::service::GetResponseResponse>* writer);
     virtual ::grpc::Status SubmitFeedback(::grpc::ServerContext* context, const ::service::FeedbackRequest* request, ::service::FeedbackResponse* response);
+    // added for image stremming 
+    virtual ::grpc::Status SendPngSequence(::grpc::ServerContext* context, ::grpc::ServerReader< ::service::PngSequence>* reader, ::service::PngSequenceResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_Hello : public BaseClass {
@@ -404,7 +443,27 @@ class ConvaiService final {
       ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_Hello<WithAsyncMethod_HelloStream<WithAsyncMethod_SpeechToText<WithAsyncMethod_GetResponse<WithAsyncMethod_GetResponseSingle<WithAsyncMethod_SubmitFeedback<Service > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_SendPngSequence : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SendPngSequence() {
+      ::grpc::Service::MarkMethodAsync(6);
+    }
+    ~WithAsyncMethod_SendPngSequence() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SendPngSequence(::grpc::ServerContext* /*context*/, ::grpc::ServerReader< ::service::PngSequence>* /*reader*/, ::service::PngSequenceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSendPngSequence(::grpc::ServerContext* context, ::grpc::ServerAsyncReader< ::service::PngSequenceResponse, ::service::PngSequence>* reader, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncClientStreaming(6, context, reader, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_Hello<WithAsyncMethod_HelloStream<WithAsyncMethod_SpeechToText<WithAsyncMethod_GetResponse<WithAsyncMethod_GetResponseSingle<WithAsyncMethod_SubmitFeedback<WithAsyncMethod_SendPngSequence<Service > > > > > > > AsyncService;
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_Hello : public BaseClass {
    private:
@@ -651,11 +710,49 @@ class ConvaiService final {
     #endif
       { return nullptr; }
   };
+  template <class BaseClass>
+  class ExperimentalWithCallbackMethod_SendPngSequence : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_SendPngSequence() {
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(6,
+          new ::grpc::internal::CallbackClientStreamingHandler< ::service::PngSequence, ::service::PngSequenceResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, ::service::PngSequenceResponse* response) { return this->SendPngSequence(context, response); }));
+    }
+    ~ExperimentalWithCallbackMethod_SendPngSequence() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SendPngSequence(::grpc::ServerContext* /*context*/, ::grpc::ServerReader< ::service::PngSequence>* /*reader*/, ::service::PngSequenceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerReadReactor< ::service::PngSequence>* SendPngSequence(
+      ::grpc::CallbackServerContext* /*context*/, ::service::PngSequenceResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerReadReactor< ::service::PngSequence>* SendPngSequence(
+      ::grpc::experimental::CallbackServerContext* /*context*/, ::service::PngSequenceResponse* /*response*/)
+    #endif
+      { return nullptr; }
+  };
   #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-  typedef ExperimentalWithCallbackMethod_Hello<ExperimentalWithCallbackMethod_HelloStream<ExperimentalWithCallbackMethod_SpeechToText<ExperimentalWithCallbackMethod_GetResponse<ExperimentalWithCallbackMethod_GetResponseSingle<ExperimentalWithCallbackMethod_SubmitFeedback<Service > > > > > > CallbackService;
+  typedef ExperimentalWithCallbackMethod_Hello<ExperimentalWithCallbackMethod_HelloStream<ExperimentalWithCallbackMethod_SpeechToText<ExperimentalWithCallbackMethod_GetResponse<ExperimentalWithCallbackMethod_GetResponseSingle<ExperimentalWithCallbackMethod_SubmitFeedback<ExperimentalWithCallbackMethod_SendPngSequence<Service > > > > > > > CallbackService;
   #endif
 
-  typedef ExperimentalWithCallbackMethod_Hello<ExperimentalWithCallbackMethod_HelloStream<ExperimentalWithCallbackMethod_SpeechToText<ExperimentalWithCallbackMethod_GetResponse<ExperimentalWithCallbackMethod_GetResponseSingle<ExperimentalWithCallbackMethod_SubmitFeedback<Service > > > > > > ExperimentalCallbackService;
+  typedef ExperimentalWithCallbackMethod_Hello<ExperimentalWithCallbackMethod_HelloStream<ExperimentalWithCallbackMethod_SpeechToText<ExperimentalWithCallbackMethod_GetResponse<ExperimentalWithCallbackMethod_GetResponseSingle<ExperimentalWithCallbackMethod_SubmitFeedback<ExperimentalWithCallbackMethod_SendPngSequence<Service > > > > > > > ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_Hello : public BaseClass {
    private:
@@ -754,6 +851,23 @@ class ConvaiService final {
     }
     // disable synchronous version of this method
     ::grpc::Status SubmitFeedback(::grpc::ServerContext* /*context*/, const ::service::FeedbackRequest* /*request*/, ::service::FeedbackResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SendPngSequence : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SendPngSequence() {
+      ::grpc::Service::MarkMethodGeneric(6);
+    }
+    ~WithGenericMethod_SendPngSequence() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SendPngSequence(::grpc::ServerContext* /*context*/, ::grpc::ServerReader< ::service::PngSequence>* /*reader*/, ::service::PngSequenceResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -876,6 +990,26 @@ class ConvaiService final {
     }
     void RequestSubmitFeedback(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SendPngSequence : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SendPngSequence() {
+      ::grpc::Service::MarkMethodRaw(6);
+    }
+    ~WithRawMethod_SendPngSequence() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SendPngSequence(::grpc::ServerContext* /*context*/, ::grpc::ServerReader< ::service::PngSequence>* /*reader*/, ::service::PngSequenceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSendPngSequence(::grpc::ServerContext* context, ::grpc::ServerAsyncReader< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* reader, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncClientStreaming(6, context, reader, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1103,6 +1237,44 @@ class ConvaiService final {
     #else
     virtual ::grpc::experimental::ServerUnaryReactor* SubmitFeedback(
       ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
+  };
+  template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_SendPngSequence : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_SendPngSequence() {
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(6,
+          new ::grpc::internal::CallbackClientStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, ::grpc::ByteBuffer* response) { return this->SendPngSequence(context, response); }));
+    }
+    ~ExperimentalWithRawCallbackMethod_SendPngSequence() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SendPngSequence(::grpc::ServerContext* /*context*/, ::grpc::ServerReader< ::service::PngSequence>* /*reader*/, ::service::PngSequenceResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerReadReactor< ::grpc::ByteBuffer>* SendPngSequence(
+      ::grpc::CallbackServerContext* /*context*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerReadReactor< ::grpc::ByteBuffer>* SendPngSequence(
+      ::grpc::experimental::CallbackServerContext* /*context*/, ::grpc::ByteBuffer* /*response*/)
     #endif
       { return nullptr; }
   };

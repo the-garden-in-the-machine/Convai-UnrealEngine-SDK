@@ -28,6 +28,7 @@ static const char* ConvaiService_method_names[] = {
   "/service.ConvaiService/GetResponse",
   "/service.ConvaiService/GetResponseSingle",
   "/service.ConvaiService/SubmitFeedback",
+  "/service.ConvaiService/SendPngSequence",
 };
 
 std::unique_ptr< ConvaiService::Stub> ConvaiService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -43,6 +44,7 @@ ConvaiService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chan
   , rpcmethod_GetResponse_(ConvaiService_method_names[3], ::grpc::internal::RpcMethod::BIDI_STREAMING, channel)
   , rpcmethod_GetResponseSingle_(ConvaiService_method_names[4], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SubmitFeedback_(ConvaiService_method_names[5], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SendPngSequence_(ConvaiService_method_names[6], ::grpc::internal::RpcMethod::CLIENT_STREAMING, channel)
   {}
 
 ::grpc::Status ConvaiService::Stub::Hello(::grpc::ClientContext* context, const ::service::HelloRequest& request, ::service::HelloResponse* response) {
@@ -155,6 +157,22 @@ void ConvaiService::Stub::experimental_async::SubmitFeedback(::grpc::ClientConte
   return result;
 }
 
+::grpc::ClientWriter< ::service::PngSequence>* ConvaiService::Stub::SendPngSequenceRaw(::grpc::ClientContext* context, ::service::PngSequenceResponse* response) {
+  return ::grpc::internal::ClientWriterFactory< ::service::PngSequence>::Create(channel_.get(), rpcmethod_SendPngSequence_, context, response);
+}
+
+void ConvaiService::Stub::experimental_async::SendPngSequence(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::experimental::ClientWriteReactor< ::service::PngSequence>* reactor) {
+  ::grpc::internal::ClientCallbackWriterFactory< ::service::PngSequence>::Create(stub_->channel_.get(), stub_->rpcmethod_SendPngSequence_, context, response, reactor);
+}
+
+::grpc::ClientAsyncWriter< ::service::PngSequence>* ConvaiService::Stub::AsyncSendPngSequenceRaw(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncWriterFactory< ::service::PngSequence>::Create(channel_.get(), cq, rpcmethod_SendPngSequence_, context, response, true, tag);
+}
+
+::grpc::ClientAsyncWriter< ::service::PngSequence>* ConvaiService::Stub::PrepareAsyncSendPngSequenceRaw(::grpc::ClientContext* context, ::service::PngSequenceResponse* response, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncWriterFactory< ::service::PngSequence>::Create(channel_.get(), cq, rpcmethod_SendPngSequence_, context, response, false, nullptr);
+}
+
 ConvaiService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ConvaiService_method_names[0],
@@ -216,6 +234,16 @@ ConvaiService::Service::Service() {
              ::service::FeedbackResponse* resp) {
                return service->SubmitFeedback(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ConvaiService_method_names[6],
+      ::grpc::internal::RpcMethod::CLIENT_STREAMING,
+      new ::grpc::internal::ClientStreamingHandler< ConvaiService::Service, ::service::PngSequence, ::service::PngSequenceResponse>(
+          [](ConvaiService::Service* service,
+             ::grpc::ServerContext* ctx,
+             ::grpc::ServerReader<::service::PngSequence>* reader,
+             ::service::PngSequenceResponse* resp) {
+               return service->SendPngSequence(ctx, reader, resp);
+             }, this)));
 }
 
 ConvaiService::Service::~Service() {
@@ -256,6 +284,13 @@ ConvaiService::Service::~Service() {
 ::grpc::Status ConvaiService::Service::SubmitFeedback(::grpc::ServerContext* context, const ::service::FeedbackRequest* request, ::service::FeedbackResponse* response) {
   (void) context;
   (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ConvaiService::Service::SendPngSequence(::grpc::ServerContext* context, ::grpc::ServerReader< ::service::PngSequence>* reader, ::service::PngSequenceResponse* response) {
+  (void) context;
+  (void) reader;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }

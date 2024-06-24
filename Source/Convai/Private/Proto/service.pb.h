@@ -47,7 +47,7 @@ struct TableStruct_service_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[24]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[26]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -112,6 +112,12 @@ extern HelloRequestDefaultTypeInternal _HelloRequest_default_instance_;
 class HelloResponse;
 class HelloResponseDefaultTypeInternal;
 extern HelloResponseDefaultTypeInternal _HelloResponse_default_instance_;
+class PngSequence;
+class PngSequenceDefaultTypeInternal;
+extern PngSequenceDefaultTypeInternal _PngSequence_default_instance_;
+class PngSequenceResponse;
+class PngSequenceResponseDefaultTypeInternal;
+extern PngSequenceResponseDefaultTypeInternal _PngSequenceResponse_default_instance_;
 class STTRequest;
 class STTRequestDefaultTypeInternal;
 extern STTRequestDefaultTypeInternal _STTRequest_default_instance_;
@@ -148,6 +154,8 @@ template<> ::service::GetResponseResponse_BehaviorTreeResponse* Arena::CreateMay
 template<> ::service::GetResponseResponse_UserTranscript* Arena::CreateMaybeMessage<::service::GetResponseResponse_UserTranscript>(Arena*);
 template<> ::service::HelloRequest* Arena::CreateMaybeMessage<::service::HelloRequest>(Arena*);
 template<> ::service::HelloResponse* Arena::CreateMaybeMessage<::service::HelloResponse>(Arena*);
+template<> ::service::PngSequence* Arena::CreateMaybeMessage<::service::PngSequence>(Arena*);
+template<> ::service::PngSequenceResponse* Arena::CreateMaybeMessage<::service::PngSequenceResponse>(Arena*);
 template<> ::service::STTRequest* Arena::CreateMaybeMessage<::service::STTRequest>(Arena*);
 template<> ::service::STTResponse* Arena::CreateMaybeMessage<::service::STTResponse>(Arena*);
 template<> ::service::TriggerConfig* Arena::CreateMaybeMessage<::service::TriggerConfig>(Arena*);
@@ -4732,6 +4740,303 @@ class FeedbackResponse PROTOBUF_FINAL :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr feedback_response_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_service_2eproto;
+};
+// -------------------------------------------------------------------
+
+class PngSequenceResponse PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:service.PngSequenceResponse) */ {
+ public:
+  inline PngSequenceResponse() : PngSequenceResponse(nullptr) {}
+  virtual ~PngSequenceResponse();
+
+  PngSequenceResponse(const PngSequenceResponse& from);
+  PngSequenceResponse(PngSequenceResponse&& from) noexcept
+    : PngSequenceResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline PngSequenceResponse& operator=(const PngSequenceResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PngSequenceResponse& operator=(PngSequenceResponse&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const PngSequenceResponse& default_instance();
+
+  static inline const PngSequenceResponse* internal_default_instance() {
+    return reinterpret_cast<const PngSequenceResponse*>(
+               &_PngSequenceResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    24;
+
+  friend void swap(PngSequenceResponse& a, PngSequenceResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PngSequenceResponse* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PngSequenceResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline PngSequenceResponse* New() const final {
+    return CreateMaybeMessage<PngSequenceResponse>(nullptr);
+  }
+
+  PngSequenceResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<PngSequenceResponse>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const PngSequenceResponse& from);
+  void MergeFrom(const PngSequenceResponse& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PngSequenceResponse* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "service.PngSequenceResponse";
+  }
+  protected:
+  explicit PngSequenceResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_service_2eproto);
+    return ::descriptor_table_service_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMessageFieldNumber = 1,
+  };
+  // string message = 1;
+  void clear_message();
+  const std::string& message() const;
+  void set_message(const std::string& value);
+  void set_message(std::string&& value);
+  void set_message(const char* value);
+  void set_message(const char* value, size_t size);
+  std::string* mutable_message();
+  std::string* release_message();
+  void set_allocated_message(std::string* message);
+  private:
+  const std::string& _internal_message() const;
+  void _internal_set_message(const std::string& value);
+  std::string* _internal_mutable_message();
+  public:
+
+  // @@protoc_insertion_point(class_scope:service.PngSequenceResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_service_2eproto;
+};
+// -------------------------------------------------------------------
+
+class PngSequence PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:service.PngSequence) */ {
+ public:
+  inline PngSequence() : PngSequence(nullptr) {}
+  virtual ~PngSequence();
+
+  PngSequence(const PngSequence& from);
+  PngSequence(PngSequence&& from) noexcept
+    : PngSequence() {
+    *this = ::std::move(from);
+  }
+
+  inline PngSequence& operator=(const PngSequence& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PngSequence& operator=(PngSequence&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const PngSequence& default_instance();
+
+  static inline const PngSequence* internal_default_instance() {
+    return reinterpret_cast<const PngSequence*>(
+               &_PngSequence_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    25;
+
+  friend void swap(PngSequence& a, PngSequence& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PngSequence* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PngSequence* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline PngSequence* New() const final {
+    return CreateMaybeMessage<PngSequence>(nullptr);
+  }
+
+  PngSequence* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<PngSequence>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const PngSequence& from);
+  void MergeFrom(const PngSequence& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PngSequence* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "service.PngSequence";
+  }
+  protected:
+  explicit PngSequence(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_service_2eproto);
+    return ::descriptor_table_service_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPngDataFieldNumber = 1,
+    kEndOfSequenceFieldNumber = 2,
+  };
+  // bytes png_data = 1;
+  void clear_png_data();
+  const std::string& png_data() const;
+  void set_png_data(const std::string& value);
+  void set_png_data(std::string&& value);
+  void set_png_data(const char* value);
+  void set_png_data(const void* value, size_t size);
+  std::string* mutable_png_data();
+  std::string* release_png_data();
+  void set_allocated_png_data(std::string* png_data);
+  private:
+  const std::string& _internal_png_data() const;
+  void _internal_set_png_data(const std::string& value);
+  std::string* _internal_mutable_png_data();
+  public:
+
+  // bool end_of_sequence = 2;
+  void clear_end_of_sequence();
+  bool end_of_sequence() const;
+  void set_end_of_sequence(bool value);
+  private:
+  bool _internal_end_of_sequence() const;
+  void _internal_set_end_of_sequence(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:service.PngSequence)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr png_data_;
+  bool end_of_sequence_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_service_2eproto;
 };
@@ -9623,9 +9928,163 @@ inline void FeedbackResponse::set_allocated_feedback_response(std::string* feedb
   // @@protoc_insertion_point(field_set_allocated:service.FeedbackResponse.feedback_response)
 }
 
+// -------------------------------------------------------------------
+
+// PngSequenceResponse
+
+// string message = 1;
+inline void PngSequenceResponse::clear_message() {
+  message_.ClearToEmpty();
+}
+inline const std::string& PngSequenceResponse::message() const {
+  // @@protoc_insertion_point(field_get:service.PngSequenceResponse.message)
+  return _internal_message();
+}
+inline void PngSequenceResponse::set_message(const std::string& value) {
+  _internal_set_message(value);
+  // @@protoc_insertion_point(field_set:service.PngSequenceResponse.message)
+}
+inline std::string* PngSequenceResponse::mutable_message() {
+  // @@protoc_insertion_point(field_mutable:service.PngSequenceResponse.message)
+  return _internal_mutable_message();
+}
+inline const std::string& PngSequenceResponse::_internal_message() const {
+  return message_.Get();
+}
+inline void PngSequenceResponse::_internal_set_message(const std::string& value) {
+  
+  message_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void PngSequenceResponse::set_message(std::string&& value) {
+  
+  message_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:service.PngSequenceResponse.message)
+}
+inline void PngSequenceResponse::set_message(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  message_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:service.PngSequenceResponse.message)
+}
+inline void PngSequenceResponse::set_message(const char* value,
+    size_t size) {
+  
+  message_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:service.PngSequenceResponse.message)
+}
+inline std::string* PngSequenceResponse::_internal_mutable_message() {
+  
+  return message_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* PngSequenceResponse::release_message() {
+  // @@protoc_insertion_point(field_release:service.PngSequenceResponse.message)
+  return message_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void PngSequenceResponse::set_allocated_message(std::string* message) {
+  if (message != nullptr) {
+    
+  } else {
+    
+  }
+  message_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), message,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:service.PngSequenceResponse.message)
+}
+
+// -------------------------------------------------------------------
+
+// PngSequence
+
+// bytes png_data = 1;
+inline void PngSequence::clear_png_data() {
+  png_data_.ClearToEmpty();
+}
+inline const std::string& PngSequence::png_data() const {
+  // @@protoc_insertion_point(field_get:service.PngSequence.png_data)
+  return _internal_png_data();
+}
+inline void PngSequence::set_png_data(const std::string& value) {
+  _internal_set_png_data(value);
+  // @@protoc_insertion_point(field_set:service.PngSequence.png_data)
+}
+inline std::string* PngSequence::mutable_png_data() {
+  // @@protoc_insertion_point(field_mutable:service.PngSequence.png_data)
+  return _internal_mutable_png_data();
+}
+inline const std::string& PngSequence::_internal_png_data() const {
+  return png_data_.Get();
+}
+inline void PngSequence::_internal_set_png_data(const std::string& value) {
+  
+  png_data_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArena());
+}
+inline void PngSequence::set_png_data(std::string&& value) {
+  
+  png_data_.Set(
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:service.PngSequence.png_data)
+}
+inline void PngSequence::set_png_data(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  png_data_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(value), GetArena());
+  // @@protoc_insertion_point(field_set_char:service.PngSequence.png_data)
+}
+inline void PngSequence::set_png_data(const void* value,
+    size_t size) {
+  
+  png_data_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:service.PngSequence.png_data)
+}
+inline std::string* PngSequence::_internal_mutable_png_data() {
+  
+  return png_data_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArena());
+}
+inline std::string* PngSequence::release_png_data() {
+  // @@protoc_insertion_point(field_release:service.PngSequence.png_data)
+  return png_data_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void PngSequence::set_allocated_png_data(std::string* png_data) {
+  if (png_data != nullptr) {
+    
+  } else {
+    
+  }
+  png_data_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), png_data,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:service.PngSequence.png_data)
+}
+
+// bool end_of_sequence = 2;
+inline void PngSequence::clear_end_of_sequence() {
+  end_of_sequence_ = false;
+}
+inline bool PngSequence::_internal_end_of_sequence() const {
+  return end_of_sequence_;
+}
+inline bool PngSequence::end_of_sequence() const {
+  // @@protoc_insertion_point(field_get:service.PngSequence.end_of_sequence)
+  return _internal_end_of_sequence();
+}
+inline void PngSequence::_internal_set_end_of_sequence(bool value) {
+  
+  end_of_sequence_ = value;
+}
+inline void PngSequence::set_end_of_sequence(bool value) {
+  _internal_set_end_of_sequence(value);
+  // @@protoc_insertion_point(field_set:service.PngSequence.end_of_sequence)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
