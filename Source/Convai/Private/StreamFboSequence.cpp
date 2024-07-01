@@ -64,7 +64,7 @@ void AStreamFboSequence::CaptureImage(TArray<FColor>& OutBitmap, TArray<uint8>& 
 	FImageUtils::CompressImageArray(RTResource->GetSizeX(), RTResource->GetSizeY(), OutBitmap, OutCompressedBitmap);
 }
 
-//for debuging 
+
 void AStreamFboSequence::CaptureAndStoreImage()
 {
 	TArray<FColor> Bitmap;
@@ -76,7 +76,7 @@ void AStreamFboSequence::CaptureAndStoreImage()
 
 	UE_LOG(LogTemp, Warning, TEXT("Stored screenshot in memory. Total stored images: %d"), StoredImages.Num());
 }
-
+//for debuging 
 void AStreamFboSequence::CaptureAndSaveRenderTarget()
 {
 	TArray<FColor> Bitmap;

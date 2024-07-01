@@ -263,7 +263,7 @@ TArray<uint8> UConvaiGRPCGetResponseProxy::ConsumeFromAudioBuffer(bool& IsThisTh
 			AudioBuffer.RemoveAt(0, Length);
 	}
 	m_mutex.Unlock();
-
+	 
 
 	if (LastWriteReceived && AudioBuffer.Num() == 0)
 		IsThisTheFinalWrite = true;

@@ -154,7 +154,11 @@ private:
 	FThreadSafeBool InformOnDataReceived;
 
 	// Stores the audio data to be streamed to the API
+
 	TArray<uint8> AudioBuffer;
+
+	// Stores the image data to be streamed to the API
+	TArray<uint8> ImageBuffer;
 
 	// True when we are informed that the "AudioBuffer" is complete and no more audio will be received
 	FThreadSafeBool LastWriteReceived;
