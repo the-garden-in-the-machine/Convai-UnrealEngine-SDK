@@ -14,9 +14,9 @@ AStreamFboSequence::AStreamFboSequence()
 	SceneCaptureComponent = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("SceneCaptureComponent"));
 	RootComponent = SceneCaptureComponent;
 
-	RenderTarget = nullptr; // Set this to your Render Target in the rendering  of the StreamFBO blueprint 
+	RenderTarget = nullptr; // Set this to your Render Target in the rendering  of the StreamFBO blueprint
+
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
- 	
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -38,9 +38,9 @@ void AStreamFboSequence::Tick(float DeltaTime)
 	//UE_LOG(LogTemp, Warning, TEXT("FrameCounter: %d"), FrameCounter);
 
 	if (FrameCounter >= CaptureInterval) {
-		CaptureAndSaveRenderTarget();
+		//CaptureAndSaveRenderTarget();
 		FrameCounter = 0;
-		//CaptureAndStoreImage();
+		CaptureAndStoreImage();
 	}
 }
 
@@ -71,12 +71,17 @@ void AStreamFboSequence::CaptureAndStoreImage()
 	TArray<uint8> CompressedBitmap;
 
 	CaptureImage(Bitmap, CompressedBitmap);
-
+	//saving to memory 
 	StoredImages.Add(MoveTemp(CompressedBitmap));
+	
+	//create a texture and storeit 
+
 
 	UE_LOG(LogTemp, Warning, TEXT("Stored screenshot in memory. Total stored images: %d"), StoredImages.Num());
 }
-//for debuging 
+
+//For debuging savin images to disk  
+
 void AStreamFboSequence::CaptureAndSaveRenderTarget()
 {
 	TArray<FColor> Bitmap;
@@ -100,8 +105,3 @@ void AStreamFboSequence::CaptureAndSaveRenderTarget()
 	}
 }
 
-//dont think this will be needde if im on convai ?
-//const TArray<TArray<uint8>>& AStreamFboSequence::StreamStoredImages() const
-//{
-//	return StoredImages;
-//}

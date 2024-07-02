@@ -24,6 +24,11 @@ UConvaiChatbotComponent::UConvaiChatbotComponent()
 	InterruptVoiceFadeOutDuration = 1.0;
 	LastPlayerName = FString("Unknown");
 	//Environment = CreateDefaultSubobject<UConvaiEnvironment>(TEXT("Environment"));
+
+	//For image capture 
+	  // Set default values
+	StreamFboSequenceInstance = nullptr;
+	
 }
 
 void UConvaiChatbotComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -1046,8 +1051,9 @@ void UConvaiChatbotComponent::BeginPlay()
 	if (CharacterID != "")
 		UE_LOG(ConvaiChatbotComponentLog, Warning, TEXT("Add character id "));
 		//ConvaiGetDetails();
-
 }
+
+
 
 void UConvaiChatbotComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -1165,4 +1171,34 @@ void UConvaiChatbotComponent::OnConvaiGetDetailsCompleted(FString ReceivedCharac
 
 	OnCharacterDataLoadEvent.Broadcast(true);
 	ConvaiChatBotGetDetailsProxy = nullptr;
+}
+void UConvaiChatbotComponent::CaptureImageAndStore()
+{
+	if (!StreamFboSequenceInstance)
+	{
+		// instance of AStreamFboSequence
+		StreamFboSequenceInstance = GetWorld()->SpawnActor<AStreamFboSequence>();
+	}
+
+	if (StreamFboSequenceInstance)
+	{
+		StreamFboSequenceInstance->CaptureAndStoreImage();
+	}
+	else
+	{
+		UE_LOG(ConvaiChatbotComponentLog, Error, TEXT("Failed to create StreamFboSequenceInstance."));
+	}
+}
+
+TArray<uint8> UConvaiChatbotComponent::GetLatestCapturedImage() const
+{
+	if (StreamFboSequenceInstance && StreamFboSequenceInstance->StoredImages.Num() > 0)
+	{
+		return StreamFboSequenceInstance->StoredImages.Last();
+	}
+	else
+	{
+		UE_LOG(ConvaiChatbotComponentLog, Warning, TEXT("No images stored yet."));
+		return TArray<uint8>();
+	}
 }

@@ -3,9 +3,9 @@
 #pragma once
 //#include "CoreMinimal.h"
 #include "Components/AudioComponent.h"
+#include "StreamFboSequence.h"
 #include "ConvaiAudioStreamer.h"
 #include "ConvaiDefinitions.h"
-
 #include "ConvaiChatbotComponent.generated.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(ConvaiChatbotComponentLog, Log, All);
@@ -344,6 +344,8 @@ public:
 	virtual bool CanUseLipSync() override;
 	//~ End UConvaiAudioStreamer Interface.
 
+	
+
 private:
 	UConvaiChatBotGetDetailsProxy* ConvaiGetDetails();
 
@@ -432,6 +434,19 @@ private:
 	float TotalReceivedAudioDuration = 0;
 
 	TArray<uint8> RecordedAudio;
+	
 	uint32 RecordedAudioSampleRate;
 	bool IsRecordingAudio;
+
+	// For image sequence
+public:  
+	UFUNCTION(BlueprintCallable, Category = "Convai|Capture")
+	void CaptureImageAndStore();
+
+	UFUNCTION(BlueprintCallable, Category = "Convai|Capture")
+	TArray<uint8> GetLatestCapturedImage() const;
+
+private:
+	AStreamFboSequence* StreamFboSequenceInstance;
+
 };

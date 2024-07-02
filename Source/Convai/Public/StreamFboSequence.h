@@ -15,9 +15,9 @@ class CONVAI_API AStreamFboSequence : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AStreamFboSequence();
-	const TArray<TArray<uint8>>& StreamStoredImages() const;
+	
 
-protected:
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -31,10 +31,10 @@ protected:
 	class UTextureRenderTarget2D* RenderTarget;
 
 	void CaptureImage(TArray<FColor>& OutBitmap, TArray<uint8>& OutCompressedBitmap);
-	void CaptureAndSaveRenderTarget();
+	void CaptureAndSaveRenderTarget();//for debugin if image is actually saved
 	void CaptureAndStoreImage();
 
-private:
+
 	int32 FrameCounter;
 	static const int32 CaptureInterval = 64;
 	TArray<TArray<uint8>> StoredImages;
